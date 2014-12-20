@@ -7,14 +7,14 @@ package chessgame;
  */
 
 
-
+import java.awt.geom.Point2D;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.Light.Point;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -26,54 +26,34 @@ public class ChessGame extends Application {
     boolean bilyNaTahu = true; 
     boolean oznacenaFigurka = false;
     
+    private final Figurka bv1 = new Vez(true, 3, 3);
+    
     @Override
     public void start(Stage primaryStage) {
-        /*Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        root.getChildren().add(btn);
-        Scene scene = new Scene(root, 300, 250);
-        */
         
         //Okno aplikace
         StackPane root = new StackPane();
         Scene scene = new Scene(root, 800, 600);
-        primaryStage.setTitle("Chess game");        
+        primaryStage.setTitle("Chess game");
         
         //Vykreslovací plocha
         Canvas canvas = new Canvas(scene.getWidth(), scene.getHeight());
         final GraphicsContext gc = canvas.getGraphicsContext2D();
-            //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());  ???
+        vykresli(gc, canvas.getWidth(), canvas.getHeight());
 
-        gc.setFill(Color.BLANCHEDALMOND);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        k.vykresliSachovnici(true, gc);
-        
-        Figurka bv1 = new Vez(true,3,3);
-        
-        bv1.vykresli(gc);
-        
-        
-        
-        k.vypisHraceNaTahu(bilyNaTahu, gc);
-        
-        /*
-        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, 
+        //klinutí myší
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, 
         new EventHandler<MouseEvent>() 
         {
             @Override
             public void handle(MouseEvent e) 
             {
-                //gc.clearRect(e.getX() - 2, e.getY() - 2, 5, 5);
+                //aplikování změn
+                bv1.setPozice(2, 2);
+                bv1.getPohyb();
+                vykresli(gc, canvas.getWidth(), canvas.getHeight());
             }
-       });*/
-        
+        });
         
         //vykrslení plochy
         root.getChildren().add(canvas);
@@ -86,6 +66,15 @@ public class ChessGame extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+        
+    }
+    
+    public void vykresli(GraphicsContext gc, double width, double height)
+    {
+        k.vykresliPozadi(gc, width, height);
+        k.vykresliSachovnici(true, gc);
+        bv1.vykresli(gc);        
+        k.vypisHraceNaTahu(bilyNaTahu, gc);
     }
     
 }

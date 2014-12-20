@@ -7,7 +7,6 @@
 package chessgame;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.Light.Point;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -19,6 +18,15 @@ import javafx.scene.text.FontWeight;
 public class Kresleni {
     private final int pixel = 5;
     private final int velikostCtverce = 11;
+    private final int velikostHraciPlochy = 8;
+    private static boolean[][] moznostPohybu = new boolean[8][8];
+    
+    
+    public void vykresliPozadi(GraphicsContext gc, double width, double height)
+    {
+        gc.setFill(Color.BLANCHEDALMOND);
+        gc.fillRect(0, 0, width, height);
+    }
     
     public void vykresliSachovnici(boolean bila, GraphicsContext gc)
     {
@@ -32,6 +40,11 @@ public class Kresleni {
                     gc.setFill(Color.BLACK);
                 bila=!bila;
                 gc.fillRect(i*velikostCtverce*pixel+150, j*velikostCtverce*pixel+100, velikostCtverce*pixel, velikostCtverce*pixel);
+                if (moznostPohybu[i][j])
+                {
+                    gc.setFill(Color.color(0, .7, 0, 0.5));
+                    gc.fillRect(i*velikostCtverce*pixel+150, j*velikostCtverce*pixel+100, velikostCtverce*pixel, velikostCtverce*pixel);
+                }
             }
             bila=!bila;
         }
@@ -47,6 +60,11 @@ public class Kresleni {
                 gc.fillRect(x*velikostCtverce*pixel+i*pixel+150, y*velikostCtverce*pixel+j*pixel+100,pixel,pixel);
             }
         }
+    }
+    
+    public void setMoznostPohybu(boolean[][] pohyb)
+    {
+        Kresleni.moznostPohybu=pohyb;
     }
     
     public void vypisHraceNaTahu(boolean hracNaTahu, GraphicsContext gc)
@@ -72,6 +90,11 @@ public class Kresleni {
     public Color getColorTransparent()
     {
         return(Color.TRANSPARENT);
+    }
+    
+    public int getVelikostHraciPlochy()
+    {
+        return(velikostHraciPlochy);
     }
 }
 

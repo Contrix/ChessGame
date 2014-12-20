@@ -7,7 +7,6 @@
 package chessgame;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.Light.Point;
 import javafx.scene.paint.Color;
 
 
@@ -19,16 +18,11 @@ public class Vez extends Figurka{
     
     public Vez(boolean bila, int x, int y)
     {
-        this.bila=bila;
-        //this.bod=bod;
-        this.x=x;
-        this.y=y;
+        this.bila = bila;
+        this.x = x;
+        this.y = y;
     }
     
-    /**
-     * Vykreslí figurku
-     //* @param g
-     */
     @Override
     public void vykresli(GraphicsContext gc)
     {
@@ -49,24 +43,24 @@ public class Vez extends Figurka{
                     {t,b,a,a,a,a,a,a,a,b,t}, 
                     {t,b,b,b,b,b,b,b,b,b,t}, 
                     {t,t,t,t,t,t,t,t,t,t,t}};
-        //kresleni.vykresliFigurku(a, b, pole, g, bod);
-        k.vykresliFigurku(pole, x,y, gc);
+        k.vykresliFigurku(pole, x, y, gc);
     }
     
-   /*
     @Override
     public void getPohyb()
     {
-        for(int i=0;i<konstanty.getVelikostPole();i++)
-            for(int j=0;j<konstanty.getVelikostPole();j++)
+        for(int i = 0; i < k.getVelikostHraciPlochy(); i++)
+            for(int j = 0; j < k.getVelikostHraciPlochy(); j++)
             {
                 //svislý pohyb
-                if(bod.x==i && bod.y!=j)
-                    pohyb[i][j]=true;
+                if(x == i && y != j)
+                    pohyb[i][j] = true;
                 //Vodorovný pohyb
-                if(bod.y==j && bod.x!=i)
-                    pohyb[i][j]=true;
+                else if(y == j && x != i)
+                    pohyb[i][j] = true;
+                else
+                    pohyb[i][j] = false;
             }
-        kresleni.setPohyb(pohyb);
-    }*/
+        k.setMoznostPohybu(pohyb);
+    }
 }

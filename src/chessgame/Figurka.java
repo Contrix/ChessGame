@@ -7,7 +7,6 @@
 package chessgame;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.Light.Point;
 import javafx.scene.paint.Color;
 
 /**
@@ -18,13 +17,13 @@ public class Figurka {
     Kresleni k = new Kresleni();
     
     protected boolean bila;
-    //protected Point bod;
     protected int x;
     protected int y;
     protected Color[][] pole;
     protected Color a = k.getColorBlack();
     protected Color b = k.getColorWhite();
     protected Color t = k.getColorTransparent();
+    protected boolean[][] pohyb = new boolean[k.getVelikostHraciPlochy()][k.getVelikostHraciPlochy()];
     
     public void Figurka(boolean bila, int x, int y)
     {
@@ -34,14 +33,29 @@ public class Figurka {
         this.y=y;
     }
     
+    /** Vykreslí samotnou figurku
+    * @param  gc GraphicsContext
+    */
     public void vykresli(GraphicsContext gc)
     {
         
     }
-    
-    public void vykresliPohyb()
+
+    /** Vykreslí možnost pohybu
+    */
+    public void getPohyb()
     {
         
+    }
+    
+    /** Změní pozici figurky
+    * @param  x x-ová souřadnice figurky
+    * @param  y y-ová souřadnice figurky
+    */
+    public void setPozice(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
     }
     
 }
