@@ -7,7 +7,10 @@
 package chessgame;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.Light.Point;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 /**
  *
@@ -28,10 +31,47 @@ public class Kresleni {
                 else
                     gc.setFill(Color.BLACK);
                 bila=!bila;
-                gc.fillRect(i*velikostCtverce*pixel, j*velikostCtverce*pixel, velikostCtverce*pixel, velikostCtverce*pixel);
+                gc.fillRect(i*velikostCtverce*pixel+150, j*velikostCtverce*pixel+100, velikostCtverce*pixel, velikostCtverce*pixel);
             }
             bila=!bila;
         }
-        //gc.fillRect(0*velikostCtverce, 0*velikostCtverce, velikostCtverce*pixel, velikostCtverce*pixel);
+    }
+    
+    public void vykresliFigurku(Color[][] pole, int x, int y, GraphicsContext gc)
+    {
+        for (int i = 0; i < velikostCtverce; i++)
+        {
+            for (int j = 0; j < velikostCtverce; j++)
+            {
+                gc.setFill(pole[j][i]);
+                gc.fillRect(x*velikostCtverce*pixel+i*pixel+150, y*velikostCtverce*pixel+j*pixel+100,pixel,pixel);
+            }
+        }
+    }
+    
+    public void vypisHraceNaTahu(boolean hracNaTahu, GraphicsContext gc)
+    {
+        gc.setFill(Color.BLACK);
+        gc.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+        if(hracNaTahu)
+            gc.fillText("Na tahu jsou bílé figurky", 15, 50);
+        else
+            gc.fillText("Na tahu jsou černé figurky", 15, 50);
+    }
+    
+    public Color getColorWhite()
+    {
+        return(Color.WHITE);
+    }
+    
+    public Color getColorBlack()
+    {
+        return(Color.BLACK);
+    }
+    
+    public Color getColorTransparent()
+    {
+        return(Color.TRANSPARENT);
     }
 }
+

@@ -12,10 +12,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.Light.Point;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
@@ -24,6 +23,8 @@ import javafx.stage.Stage;
  */
 public class ChessGame extends Application {
     Kresleni k = new Kresleni();
+    boolean bilyNaTahu = true; 
+    boolean oznacenaFigurka = false;
     
     @Override
     public void start(Stage primaryStage) {
@@ -46,22 +47,32 @@ public class ChessGame extends Application {
         primaryStage.setTitle("Chess game");        
         
         //Vykreslovací plocha
-        Canvas canvas = new Canvas(800, 600);
+        Canvas canvas = new Canvas(scene.getWidth(), scene.getHeight());
         final GraphicsContext gc = canvas.getGraphicsContext2D();
             //gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());  ???
 
-        /*gc.setFill(Color.BLACK);
-        gc.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
-        gc.fillText("hello   world!", 15, 50);
-
-        gc.setLineWidth(5);
-        gc.setStroke(Color.PURPLE);
-
-        gc.strokeOval(10, 60, 30, 30);
-        gc.strokeOval(60, 60, 30, 30);
-        gc.strokeRect(30, 100, 40, 40);*/
+        gc.setFill(Color.BLANCHEDALMOND);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         k.vykresliSachovnici(true, gc);
         
+        Figurka bv1 = new Vez(true,3,3);
+        
+        bv1.vykresli(gc);
+        
+        
+        
+        k.vypisHraceNaTahu(bilyNaTahu, gc);
+        
+        /*
+        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, 
+        new EventHandler<MouseEvent>() 
+        {
+            @Override
+            public void handle(MouseEvent e) 
+            {
+                //gc.clearRect(e.getX() - 2, e.getY() - 2, 5, 5);
+            }
+       });*/
         
         
         //vykrslení plochy
