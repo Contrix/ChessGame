@@ -48,6 +48,11 @@ public class Figurka {
         
     }
     
+    public boolean getMoznostPohybu(int x, int y)
+    {
+        return(pohyb[x][y]);
+    }
+    
     /** Změní pozici figurky
     * @param  x x-ová souřadnice figurky
     * @param  y y-ová souřadnice figurky
@@ -58,4 +63,18 @@ public class Figurka {
         this.y = y;
     }
     
+    public int getX()
+    {
+        return(x);
+    }
+    
+    public int getY()
+    {
+        return(y);
+    }
+    
+    public boolean getBarvaBila()
+    {
+        return(bila);
+    }
 }

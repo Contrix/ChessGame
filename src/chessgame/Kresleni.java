@@ -17,7 +17,7 @@ import javafx.scene.text.FontWeight;
  */
 public class Kresleni {
     private final int pixel = 5;
-    private final int velikostCtverce = 11;
+    private final int dilkuVeCtverci = 11;
     private final int velikostHraciPlochy = 8;
     private static boolean[][] moznostPohybu = new boolean[8][8];
     
@@ -39,11 +39,11 @@ public class Kresleni {
                 else
                     gc.setFill(Color.BLACK);
                 bila=!bila;
-                gc.fillRect(i*velikostCtverce*pixel+150, j*velikostCtverce*pixel+100, velikostCtverce*pixel, velikostCtverce*pixel);
+                gc.fillRect(i*dilkuVeCtverci*pixel+150, j*dilkuVeCtverci*pixel+100, dilkuVeCtverci*pixel, dilkuVeCtverci*pixel);
                 if (moznostPohybu[i][j])
                 {
                     gc.setFill(Color.color(0, .7, 0, 0.5));
-                    gc.fillRect(i*velikostCtverce*pixel+150, j*velikostCtverce*pixel+100, velikostCtverce*pixel, velikostCtverce*pixel);
+                    gc.fillRect(i*dilkuVeCtverci*pixel+150, j*dilkuVeCtverci*pixel+100, dilkuVeCtverci*pixel, dilkuVeCtverci*pixel);
                 }
             }
             bila=!bila;
@@ -52,19 +52,26 @@ public class Kresleni {
     
     public void vykresliFigurku(Color[][] pole, int x, int y, GraphicsContext gc)
     {
-        for (int i = 0; i < velikostCtverce; i++)
+        for (int i = 0; i < dilkuVeCtverci; i++)
         {
-            for (int j = 0; j < velikostCtverce; j++)
+            for (int j = 0; j < dilkuVeCtverci; j++)
             {
                 gc.setFill(pole[j][i]);
-                gc.fillRect(x*velikostCtverce*pixel+i*pixel+150, y*velikostCtverce*pixel+j*pixel+100,pixel,pixel);
+                gc.fillRect(x*dilkuVeCtverci*pixel+i*pixel+150, y*dilkuVeCtverci*pixel+j*pixel+100,pixel,pixel);
             }
         }
     }
     
     public void setMoznostPohybu(boolean[][] pohyb)
     {
-        Kresleni.moznostPohybu=pohyb;
+        this.moznostPohybu=pohyb;
+    }
+    
+    public void resetMoznostPohybu()
+    {
+        for (int i = 0; i < velikostHraciPlochy; i++)
+            for (int j = 0; j < velikostHraciPlochy; j++)
+                moznostPohybu[i][j] = false;
     }
     
     public void vypisHraceNaTahu(boolean hracNaTahu, GraphicsContext gc)
@@ -95,6 +102,11 @@ public class Kresleni {
     public int getVelikostHraciPlochy()
     {
         return(velikostHraciPlochy);
+    }
+    
+    public int getVelikostCtverce()
+    {
+        return(pixel*dilkuVeCtverci);
     }
 }
 
