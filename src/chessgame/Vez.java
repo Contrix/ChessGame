@@ -47,9 +47,9 @@ public class Vez extends Figurka{
     }
     
     @Override
-    public void getPohyb()
+    public void getPohyb(Figurka[] figurky)
     {
-        for(int i = 0; i < k.getVelikostHraciPlochy(); i++)
+        /*for(int i = 0; i < k.getVelikostHraciPlochy(); i++)
             for(int j = 0; j < k.getVelikostHraciPlochy(); j++)
             {
                 //svislý pohyb
@@ -60,7 +60,50 @@ public class Vez extends Figurka{
                     pohyb[i][j] = true;
                 else
                     pohyb[i][j] = false;
-            }
+                
+                if(pohyb[i][j])
+                {
+                    for (Figurka f:figurky)
+                        if (f.isPoziceFigurky(i, j))
+                            if ((bila && f.getBarvaBila())|| (!bila && !f.getBarvaBila()))
+                                pohyb[i][j] = false;
+                }
+            }*/
+        //doleva
+        for (int i = 1; x - i >= 0; i++)
+        {
+            if (isVolnyCtverec(figurky, x-1, y))
+                pohyb[x-i][y] = true;
+            else
+                break;
+        }
+        //doprava
+        for (int i = 1; x + i < k.getVelikostHraciPlochy(); i++)
+        {
+            if (isVolnyCtverec(figurky, x+1, y))
+                pohyb[x+i][y] = true;
+            else
+                break;
+        }
+        //nahoru
+        for (int i = 1; y - i >= 0; i++)
+        {
+            if (isVolnyCtverec(figurky, x, y-i))
+                pohyb[x][y-i] = true;
+            else
+                break;
+        }
+        //dolu
+        for (int i = 1; y + i < k.getVelikostHraciPlochy(); i++)
+        {
+            if (isVolnyCtverec(figurky, x, y+i))
+                pohyb[x][y+i] = true;
+            else
+                break;
+        }
+            
+        
+        
         k.setMoznostPohybu(pohyb);
     }
 }

@@ -46,7 +46,7 @@ public class Kral extends Figurka{
     }
     
     @Override
-    public void getPohyb()
+    public void getPohyb(Figurka[] figurky)
     {
         for(int i = 0; i < k.getVelikostHraciPlochy(); i++)
             for(int j = 0; j < k.getVelikostHraciPlochy(); j++)

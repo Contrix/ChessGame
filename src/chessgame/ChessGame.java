@@ -27,8 +27,7 @@ public class ChessGame extends Application {
     private Figurka fig;
     
     private int x;
-    private int y;
-    
+    private int y;    
     
     //bílí pěšáci
     private final Figurka bp1 = new Pesec(true, 0, 6);
@@ -40,7 +39,7 @@ public class ChessGame extends Application {
     private final Figurka bp7 = new Pesec(true, 6, 6);
     private final Figurka bp8 = new Pesec(true, 7, 6);
     //bílé věže
-    private final Figurka bv1 = new Vez(true, 0, 7);
+    private final Figurka bv1 = new Vez(true, 3, 3);
     private final Figurka bv2 = new Vez(true, 7, 7);
     //bílí jezdci
     private final Figurka bj1 = new Jezdec(true, 1, 7);
@@ -74,7 +73,7 @@ public class ChessGame extends Application {
     private final Figurka cd = new Dama(false, 3, 0);
     private final Figurka ck = new Kral(false, 4, 0);
     
-    private final Figurka[] figurky = {bp1, bp2, bp3, bp4, bp5, bp6, bp7, bp8, bv1, bv2, bj1, bj2, bs1, bs2, bd, bk,
+    public final Figurka[] figurky = {bp1, bp2, bp3, bp4, bp5, bp6, bp7, bp8, bv1, bv2, bj1, bj2, bs1, bs2, bd, bk,
                                        cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8, cv1, cv2, cj1, cj2, cs1, cs2, cd, ck};
     
     @Override
@@ -113,21 +112,28 @@ public class ChessGame extends Application {
                 {
                     for (Figurka f : figurky)
                     {
-                        if (f.getX() == x)
-                            if(f.getY() == y)
+                        if (f.isPoziceFigurky(x, y))
+                        {
+                            if(bilyNaTahu && f.getBarvaBila() || !bilyNaTahu && !f.getBarvaBila())
                             {
-                                if(bilyNaTahu && f.getBarvaBila() || !bilyNaTahu && !f.getBarvaBila())
-                                {
-                                    f.getPohyb();
-                                    oznacenaFigurka = true;
-                                    fig = f;
-                                }
+                                f.getPohyb(figurky);
+                                oznacenaFigurka = true;
+                                fig = f;
                             }
+                        }
                     }
                 }
                 vykresli(gc, canvas.getWidth(), canvas.getHeight());
             }
         });
+        
+        /*
+        Timeline timeline = new Timeline(new KeyFrame(
+        Duration.seconds(1),
+        ae -> pokus()));
+        timeline.play();*/
+        
+        
         
         //vykrslení plochy
         root.getChildren().add(canvas);
@@ -150,5 +156,10 @@ public class ChessGame extends Application {
         k.vykresliSachovnici(true, gc);
         for (Figurka f:figurky)
             f.vykresli(gc);
-    }    
+    }
+    
+    public void pokus()
+    {
+        bj1.setPozice(3, 5);
+    }
 }

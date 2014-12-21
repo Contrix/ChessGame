@@ -42,10 +42,20 @@ public class Figurka {
     }
 
     /** Vykreslí možnost pohybu
+     * @param figurky pole figurek
     */
-    public void getPohyb()
+    public void getPohyb(Figurka[] figurky)
     {
         
+    }
+    
+    public boolean isVolnyCtverec (Figurka[] figurky, int x, int y)
+    {
+        for (Figurka f:figurky)
+            if (f.isPoziceFigurky(x, y))
+                if ((bila && f.getBarvaBila())|| (!bila && !f.getBarvaBila()))
+                    return (false);
+        return(true);
     }
     
     public boolean getMoznostPohybu(int x, int y)
@@ -63,14 +73,12 @@ public class Figurka {
         this.y = y;
     }
     
-    public int getX()
+    public boolean isPoziceFigurky(int x, int y)
     {
-        return(x);
-    }
-    
-    public int getY()
-    {
-        return(y);
+        if (this.x == x && this.y == y)
+            return (true);
+        else
+            return (false);
     }
     
     public boolean getBarvaBila()

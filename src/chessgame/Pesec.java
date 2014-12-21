@@ -46,21 +46,25 @@ public class Pesec extends Figurka{
     }
     
     @Override
-    public void getPohyb()
+    public void getPohyb(Figurka[] figurky)
     {
         for(int i = 0; i < k.getVelikostHraciPlochy(); i++)
             for(int j = 0; j < k.getVelikostHraciPlochy(); j++)
-            {
-                //pohyb 45° a 225°
-                if(i + j == x + y)
-                    pohyb[i][j] = true;
-                //pohyb 135° a 315°
-                else if(i - j == x - y)
-                    pohyb[i][j] = true;
+            { 
+                if(bila)
+                {
+                    if(i == x && j < y && (j == y - 1 || j + y == 10))
+                        pohyb[i][j] = true;
+                    else
+                        pohyb[i][j] = false;
+                }
                 else
-                    pohyb[i][j] = false;
-                
-                
+                {
+                    if(i == x && j > y && (j == y + 1 || j + y == 4))
+                        pohyb[i][j] = true;
+                    else
+                        pohyb[i][j] = false;
+                }
             }
         k.setMoznostPohybu(pohyb);
     }
