@@ -6,6 +6,7 @@
 
 package chessgame;
 
+import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -15,11 +16,20 @@ import javafx.scene.paint.Color;
  */
 public class Kral extends Figurka{
     
-    public Kral(boolean bila, int x, int y)
+    /** Vykreslí samotnou figurku
+    * @param  bila Barva figurky T = bílá, F = černá
+     * @param x x-ová počáteční souřadnice figurky (spawn)
+     * @param y y-ová počáteční souřadnice figurky (spawn)
+     * @param xx x-ová souřadnice vyhozené figurky
+     * @param yy y-ová souřadnice vyhozené figurky
+    */
+    public Kral(boolean bila, int x, int y, int xx, int yy)
     {
         this.bila = bila;
         this.x = x;
         this.y = y;
+        this.xx=xx;
+        this.yy=yy;
     }
     
     @Override
@@ -46,22 +56,39 @@ public class Kral extends Figurka{
     }
     
     @Override
-    public void getPohyb(Figurka[] figurky)
+    public void setPohyb(ArrayList<Figurka> figurky)
     {
-        for(int i = 0; i < k.getVelikostHraciPlochy(); i++)
-            for(int j = 0; j < k.getVelikostHraciPlochy(); j++)
-            {
-                if (i == x && j == y)
-                    pohyb[i][j] = false;
-                //pohyb 1 políčko kamkoli
-                else if(i == x - 1 || i == x || i == x + 1)
-                {
-                    if(j == y - 1 || j == y || j == y + 1)
-                        pohyb[i][j] = true;
-                }
-                else
-                    pohyb[i][j] = false;
-            }
-        k.setMoznostPohybu(pohyb);
+        if(x >= 0 && x < k.getVelikostHraciPlochy())
+        {
+            for(int i = 0; i < k.getVelikostHraciPlochy(); i++)
+                for(int j = 0; j < k.getVelikostHraciPlochy(); j++)
+                    pohyb[i][j] = 'f';
+            //nahoru
+            if (y - 1 >= 0)
+                pohyb[x][y - 1] = isVolnyCtverec(figurky, x, y - 1);
+            //dolu
+            if (y + 1 < k.getVelikostHraciPlochy())
+                pohyb[x][y + 1] = isVolnyCtverec(figurky, x, y + 1);
+            //doleva
+            if (x - 1 >= 0)
+                pohyb[x - 1][y] = isVolnyCtverec(figurky, x - 1, y);
+            //doprava
+            if (x + 1 < k.getVelikostHraciPlochy())
+                pohyb[x + 1][y] = isVolnyCtverec(figurky, x + 1, y);
+            //45
+            if (x + 1 < k.getVelikostHraciPlochy() && y - 1 >= 0)
+                pohyb[x + 1][y - 1] = isVolnyCtverec(figurky, x + 1, y - 1);
+            //135
+            if (x + 1 < k.getVelikostHraciPlochy() && y + 1 < k.getVelikostHraciPlochy())
+                pohyb[x + 1][y + 1] = isVolnyCtverec(figurky, x + 1, y + 1);
+            //225
+            if (x - 1 >= 0 && y + 1 < k.getVelikostHraciPlochy())
+                pohyb[x - 1][y + 1] = isVolnyCtverec(figurky, x - 1, y + 1);
+            //315
+            if (x - 1 >= 0 && y - 1 >= 0)
+                pohyb[x - 1][y - 1] = isVolnyCtverec(figurky, x - 1, y - 1);
+            pohyb[x][y]='s';
+            k.setMoznostPohybu(pohyb);
+        }
     }
 }

@@ -6,6 +6,7 @@
 
 package chessgame;
 
+import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -15,11 +16,20 @@ import javafx.scene.paint.Color;
  */
 public class Jezdec extends Figurka{
     
-    public Jezdec(boolean bila, int x, int y)
+    /** Vykreslí samotnou figurku
+    * @param  bila Barva figurky T = bílá, F = černá
+     * @param x x-ová počáteční souřadnice figurky (spawn)
+     * @param y y-ová počáteční souřadnice figurky (spawn)
+     * @param xx x-ová souřadnice vyhozené figurky
+     * @param yy y-ová souřadnice vyhozené figurky
+    */
+    public Jezdec(boolean bila, int x, int y, int xx, int yy)
     {
         this.bila = bila;
         this.x = x;
         this.y = y;
+        this.xx=xx;
+        this.yy=yy;
     }
     
     @Override
@@ -46,20 +56,24 @@ public class Jezdec extends Figurka{
     }
     
     @Override
-    public void getPohyb(Figurka[] figurky)
+    public void setPohyb(ArrayList<Figurka> figurky)
     {
-        for(int i = 0; i < k.getVelikostHraciPlochy(); i++)
-            for(int j = 0; j < k.getVelikostHraciPlochy(); j++)
-            {
-                //pohyb horní, dolní
-                if((i == x - 1 || i == x + 1) && (j == y - 2 || j == y + 2))
-                    pohyb[i][j] = true;
-                //pohyb levý, pravý
-                else if((i == x - 2 || i == x + 2) && (j == y - 1 || j == y + 1))
-                    pohyb[i][j] = true;
-                else
-                    pohyb[i][j] = false;
-            }
-        k.setMoznostPohybu(pohyb);
+        if(x >= 0 && x < k.getVelikostHraciPlochy())
+        {
+            for(int i = 0; i < k.getVelikostHraciPlochy(); i++)
+                for(int j = 0; j < k.getVelikostHraciPlochy(); j++)
+                {
+                    //pohyb horní, dolní
+                    if((i == x - 1 || i == x + 1) && (j == y - 2 || j == y + 2))
+                        pohyb[i][j] = isVolnyCtverec(figurky, i, j);
+                    //pohyb levý, pravý
+                    else if((i == x - 2 || i == x + 2) && (j == y - 1 || j == y + 1))
+                        pohyb[i][j] = isVolnyCtverec(figurky, i, j);
+                    else
+                        pohyb[i][j] = 'f';
+                }
+            pohyb[x][y]='s';
+            k.setMoznostPohybu(pohyb);
+        }
     }
 }
